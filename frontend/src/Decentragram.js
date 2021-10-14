@@ -4,21 +4,82 @@ const address = "0x8871A24C7129d736CFf960d07DdE07CfB2Bbb962";
 
 const abi = [
   {
+    anonymous: false,
     inputs: [
       {
+        indexed: false,
         internalType: "uint256",
-        name: "x",
+        name: "id",
         type: "uint256",
       },
+      {
+        indexed: false,
+        internalType: "string",
+        name: "hash",
+        type: "string",
+      },
+      {
+        indexed: false,
+        internalType: "string",
+        name: "description",
+        type: "string",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "tipAmount",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "address payable",
+        name: "author",
+        type: "address",
+      },
     ],
-    name: "set",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    name: "ImageCreated",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "string",
+        name: "hash",
+        type: "string",
+      },
+      {
+        indexed: false,
+        internalType: "string",
+        name: "description",
+        type: "string",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "tipAmount",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "address payable",
+        name: "author",
+        type: "address",
+      },
+    ],
+    name: "ImageTipped",
+    type: "event",
   },
   {
     inputs: [],
-    name: "get",
+    name: "imageCount",
     outputs: [
       {
         internalType: "uint256",
@@ -28,7 +89,89 @@ const abi = [
     ],
     stateMutability: "view",
     type: "function",
-    constant: true,
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "images",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
+      },
+      {
+        internalType: "string",
+        name: "hash",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "description",
+        type: "string",
+      },
+      {
+        internalType: "uint256",
+        name: "tipAmount",
+        type: "uint256",
+      },
+      {
+        internalType: "address payable",
+        name: "author",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "name",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "string",
+        name: "_imgHash",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "_description",
+        type: "string",
+      },
+    ],
+    name: "uploadImage",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_id",
+        type: "uint256",
+      },
+    ],
+    name: "tipImageOwner",
+    outputs: [],
+    stateMutability: "payable",
+    type: "function",
   },
 ];
 

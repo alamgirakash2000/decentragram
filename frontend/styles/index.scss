@@ -1,12 +1,29 @@
-.home {
-  height: 100vh;
-  color: white;
-  background: -webkit-linear-gradient(to right, #355c7d, #6c5b7b, #c06c84);
-  background: linear-gradient(to right, #355c7d, #6c5b7b, #c06c84);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  h1 {
-    margin: auto;
+.header {
+  background-color: black;
+  .container {
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    align-items: center;
+  }
+}
+
+.uploadImage {
+  &__form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 90%;
+    background-color: rgb(247, 230, 230);
+    padding: 2rem;
+    margin: 2rem auto;
+    box-sizing: border-box;
+    border-radius: 10px;
+    box-shadow: 3px 3px 2px 1px rgba(21, 21, 22, 0.2);
+    h1 {
+      font-size: larger;
+      color: green;
+      font-weight: bold;
+    }
   }
 }
