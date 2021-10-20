@@ -1,48 +1,47 @@
 import React, { useState } from "react";
-import ipfs from "../src/ipfs";
 import decentragram from "../src/Decentragram";
 
-export default function ImageUpload({ user }) {
+import { create } from "ipfs-http-client";
+const client = create("https://ipfs.infura.io:5001/api/v0");
+
+export default function ImageUpload({ user, setLoading }) {
   const [description, setDescription] = useState("");
-  const [buffer, setBuffer] = useState({});
-  const [loading, setLoading] = useState(false);
+  const [image, setImage] = useState();
 
   const handleImageSelect = (e) => {
     const file = e.target.files[0];
-    const reader = new window.FileReader();
-    reader.readAsArrayBuffer(file);
-    reader.onloadend = () => {
-      setBuffer(Buffer(reader.result));
-    };
+    setImage(file);
   };
 
-  const submitHandler = (e) => {
+  // A function to upload image on ipfs and blockchain
+  const submitHandler = async (e) => {
     e.preventDefault();
     setLoading(true);
 
-    // upload image to IPFS
-    ipfs.add(buffer, (error, result) => {
-      if (error) {
-        console.log(error);
-        window.alert(error.message);
-      }
-
-      console.log(result);
-      // Add data to the Blockchain
-      decentragram.methods
-        .uploadImage(result[0].hash, description)
+    try {
+      const added = await client.add(image);
+      const url = `https://ipfs.infura.io/ipfs/${added.path}`;
+      console.log(url);
+      // Add to Blockchain
+      await decentragram.methods
+        .uploadImage(added.path, description)
         .send({ from: user })
         .on("transactionHash", (hash) => {
           setLoading(false);
+          window.alert(
+            "Image upload successful! It may take sometime to be updated. Please refresh sometimes later to see the update."
+          );
         });
-    });
+    } catch (error) {
+      console.log("Error uploading file: ", error);
+    }
   };
 
   return (
     <div className='uploadImage'>
       <form action='' onSubmit={submitHandler} className='uploadImage__form'>
         <h1>Upload an Image with description:</h1>
-        <input
+        <textarea
           required
           type='text'
           className='my-3'

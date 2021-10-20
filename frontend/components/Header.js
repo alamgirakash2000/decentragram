@@ -1,13 +1,13 @@
 import Identicon from "identicon.js";
 import React from "react";
 
-export default function Header({ user, name }) {
+export default function Header({ user }) {
   return (
     <div className='header'>
       <div className='container'>
-        <h1>{name}</h1>
+        <h1>DGram</h1>
         <div className='right d-flex'>
-          <p>{user}</p>
+          <p>Hi, {user}</p>
           {user ? (
             <img
               className='ml-2'

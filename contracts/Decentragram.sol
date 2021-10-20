@@ -2,7 +2,7 @@
 pragma solidity ^0.7.0;
 
 contract Decentragram{
-   string public name = "Decentragram";
+   string public name = "DGram";
    
    // Store Post
    uint public imageCount = 0;

@@ -1,8 +1,9 @@
-import IPFS from "ipfs-mini";
-const ipfs = new IPFS({
+import IpfsApi from "ipfs-api";
+
+const ipfsApi = IpfsApi({
   host: "ipfs.infura.io",
   port: 5001,
   protocol: "https",
 });
 
-export default ipfs;
+export default ipfsApi;

@@ -3,8 +3,7 @@ import Identicon from "identicon.js";
 import Web3 from "web3";
 import decentragram from "../src/Decentragram";
 
-export default function ImagePreview({ image, user }) {
-  const [loading, setLoading] = useState(false);
+export default function ImagePreview({ image, user, setLoading }) {
   const sendTip = async () => {
     setLoading(true);
     let tipAmount = Web3.utils.toWei("0.01", "Ether");
@@ -14,7 +13,9 @@ export default function ImagePreview({ image, user }) {
         value: tipAmount,
       });
       setLoading(false);
-      window.alert("Tip send success");
+      window.alert(
+        "Tip send success!  It may take sometime to be updated. Please refresh sometimes later to see the update."
+      );
     } catch (err) {
       console.log(err);
       window.alert(err.message);
@@ -40,8 +41,7 @@ export default function ImagePreview({ image, user }) {
 
       <div className='imagePreview__body'>
         <p className='mb-2'>{image.description}</p>
-        {console.log("https://ipfs.infura.io/ipfs/" + image.hash)}
-        <img src={`https://ipfs.infura.io/ipfs/${image.hash}`} />
+        <img src={`https://ipfs.io/ipfs/${image.hash}`} />
       </div>
 
       <div className='imagePreview__footer'>
@@ -58,8 +58,6 @@ export default function ImagePreview({ image, user }) {
           Tip 0.01 ETH
         </button>
       </div>
-
-      {console.log("Calling")}
     </div>
   );
 }
