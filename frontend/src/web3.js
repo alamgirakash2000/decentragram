@@ -7,7 +7,7 @@ if (typeof window !== "undefined" && window.web3 !== "undefined") {
 } else {
   // Handle the case when we are outside of the browser
   const provider = new Web3.providers.HttpProvider(
-    "https://rinkeby.infura.io/v3/15ebeb02363149d697d492aabeb7a6cf"
+    "https://rinkeby.infura.io/v3/9de264f6867544518ff4b314e5e5d68f"
   );
   web3 = new Web3(provider);
 }

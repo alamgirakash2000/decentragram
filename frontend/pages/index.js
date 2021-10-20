@@ -5,28 +5,32 @@ import decentragram from "../src/Decentragram";
 import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import ImageUpload from "../components/ImageUpload";
-const IPFS = require("ipfs-mini");
-const ipfs = new IPFS({
-  host: "ipfs.infura.io",
-  port: 5001,
-  protocol: "https",
-});
+import ImagePreview from "../components/ImagePreview";
 
 export default function Home() {
   const [user, setUser] = useState("");
   const [imageCount, setImageCount] = useState(0);
-  const [buffer, setBuffer] = useState();
+  const [images, setImages] = useState([]);
+  const [name, setName] = useState("");
 
   useEffect(() => {
     loadBlockchain();
-    console.log(imageCount);
   }, []);
 
+  // Load Blockchain data like name, imageCount and user
   const loadBlockchain = async () => {
     const users = await web3.eth.getAccounts();
-    const imageCount = await decentragram.methods.imageCount().call();
     setUser(users[0]);
-    setImageCount(imageCount);
+    let name = await decentragram.methods.name().call();
+    setName(name);
+    let imagesCount = await decentragram.methods.imageCount().call();
+    setImageCount(imagesCount);
+
+    // Load Images
+    for (let i = 1; i <= imagesCount; i++) {
+      const image = await decentragram.methods.images(i).call();
+      setImages([...images, image]);
+    }
   };
 
   return (
@@ -40,9 +44,14 @@ export default function Home() {
       </Head>
 
       <main>
-        <Header user={user} />
+        <Header user={user} name={name} />
         <div className='container'>
-          <ImageUpload ipfs={ipfs} buffer={buffer} setBuffer={setBuffer} />
+          <ImageUpload user={user} />
+        </div>
+        <div className='container'>
+          {images?.map((img) => (
+            <ImagePreview user={user} key={img.id} image={img} />
+          ))}
         </div>
       </main>
     </>

@@ -1,28 +1,40 @@
 import React, { useState } from "react";
+import ipfs from "../src/ipfs";
+import decentragram from "../src/Decentragram";
 
-//QmWLKrTQRhyDcgPiPCLLoLssh5MA4DvLRQc1YEey34RSa3
-
-export default function ImageUpload({ buffer, setBuffer, ipfs }) {
-  const [image, setImage] = useState({});
+export default function ImageUpload({ user }) {
   const [description, setDescription] = useState("");
+  const [buffer, setBuffer] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const handleImageSelect = (e) => {
-    setImage(e.target.files[0]);
-    console.log(e.target.files[0]);
+    const file = e.target.files[0];
+    const reader = new window.FileReader();
+    reader.readAsArrayBuffer(file);
+    reader.onloadend = () => {
+      setBuffer(Buffer(reader.result));
+    };
   };
 
   const submitHandler = (e) => {
     e.preventDefault();
+    setLoading(true);
 
-    const file = URL.createObjectURL(image);
-
-    ipfs.add(image, (err, result) => {
-      if (err) {
-        window.prompt(err.message);
-        console.log(err);
-      } else {
-        console.log("https://ipfs.infura.io/ipfs/" + result);
+    // upload image to IPFS
+    ipfs.add(buffer, (error, result) => {
+      if (error) {
+        console.log(error);
+        window.alert(error.message);
       }
+
+      console.log(result);
+      // Add data to the Blockchain
+      decentragram.methods
+        .uploadImage(result[0].hash, description)
+        .send({ from: user })
+        .on("transactionHash", (hash) => {
+          setLoading(false);
+        });
     });
   };
 
