@@ -39,7 +39,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Decentragram-Dapp</title>
+        <title>DGram by Akash</title>
         <meta
           name='description'
           content='This is decentralized clone of instagram'
