@@ -1,7 +1,5 @@
 {
   "dependencies": {
-    "@truffle/hdwallet-provider": "^1.5.1",
-    "identicon.js": "^2.3.3",
-    "web3": "^1.6.0"
+    "@truffle/hdwallet-provider": "^1.5.1"
   }
 }
